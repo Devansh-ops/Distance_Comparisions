@@ -23,3 +23,6 @@ API from `Distancematrix.ai` was found to be the closest to `google`
     comparator = DistanceComparator()
     comparator.process_and_average_metrics('coordinates.csv', 100)
     ```
+---
+
+**NOTE: To compare Distancematrix.ai to Google API, use `main_distancematrix.py`</bold>**
