@@ -140,7 +140,7 @@ class DistanceComparator:
 
         return comparison_metrics
 
-    def process_and_average_metrics(self, csv_file_path, limit=100):
+    def process_and_average_metrics(self, csv_file_path, limit=100, log_file="log.txt"):
         # Initialize counters and sums
         request_counter = 0
         sum_google_distance = 0
@@ -175,6 +175,11 @@ class DistanceComparator:
 
                     if request_counter % 10 == 0:
                         self.print_average_metrics(request_counter, sum_google_distance, sum_distancematrix_distance, sum_absolute_error, sum_relative_error, sum_accuracy)
+                    
+                    # Logging to file
+                    data = {"startLong" : start_long, "startLat" : start_lat, "endLong" : end_long, "endLat" : end_lat, "GoogleDistance" : google_distance, "DistancematrixDistance" : distancematrix_distance, "metrics" : metrics}
+                    with open(log_file, 'a', encoding='utf-8') as f:
+                        f.write(json.dumps(data) + "\n")
 
             except KeyboardInterrupt:
                 sys.exit(0)
@@ -204,4 +209,4 @@ class DistanceComparator:
 
 if __name__ == "__main__":
     comparator = DistanceComparator()
-    comparator.process_and_average_metrics('coordinates.csv', 500)
+    comparator.process_and_average_metrics('coordinates_new.csv', 2000, "log.txt")
